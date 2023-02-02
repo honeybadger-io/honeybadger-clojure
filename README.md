@@ -14,7 +14,7 @@ The library only has one public endpoint: `notify`.  You can pass
 (require '[honeybadger.core :as hb])
 
 (def hb-config
-  {:api-key "d34db33f"
+  {:api-key "{{PROJECT_API_KEY}}"
    :env     "development"})
 
 (hb/notify hb-config "Something happened")
@@ -94,7 +94,7 @@ combinators in `honeybadger.filter`:
          '[honeybadger.filter :as hbf])
 
 (def hb-config
-  {:api-key "d34db33f"
+  {:api-key "{{PROJECT_API_KEY}}"
    :env     "development"
    :filters [(hbf/only   (hbf/env? :production))
              (hbf/except (hbf/instance? ArithmeticException))
@@ -159,7 +159,7 @@ reported because it will be `nil` iff the error reporting was filtered
 out. We can use this to take conditional actions:
 
 ```clj
-(if-let [hb-id @(hb/notify {:api-key "d34db33f"
+(if-let [hb-id @(hb/notify {:api-key "{{PROJECT_API_KEY}}"
                             :filters [(hbf/only (constantly nil))]}
                            "chunky bacon")]
   (str "Reported error with ID " hb-id)
